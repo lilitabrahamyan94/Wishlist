@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wishlist</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%222.5%203.5%2017%2016%22%3E%3Cdefs%3E%3CclipPath%20id%3D%22c%22%3E%3Cpath%20d%3D%22M11%2018.500S3.500%2014%203.500%208.600A4%204%200%200%201%2011%206.700a4%204%200%200%201%207.500%201.900C18.500%2014%2011%2018.500%2011%2018.500z%22%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3Cg%20clip-path%3D%22url%28%23c%29%22%3E%3Crect%20x%3D%223%22%20y%3D%224.40%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23E40303%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%226.77%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23FF8C00%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%229.13%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23FFED00%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2211.50%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23008026%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2213.87%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23004DFF%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2216.23%22%20width%3D%2216%22%20height%3D%222.42%22%20fill%3D%22%23750787%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400&display=swap">
 <style>
 :root{
@@ -32,7 +33,7 @@ body{margin:0;background:var(--paper);color:var(--ink);
   font-size:15px;line-height:1.45}
 .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
 header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:28px}
+  margin-bottom:28px}
 h1{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0}
 .summary{color:var(--muted);margin:0}
 .summary b{color:var(--in);font-weight:600}
@@ -121,9 +122,6 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
 .banner{position:relative;overflow:hidden;color:#FFFFFF;font-family:"Outfit","Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif}
 .banner img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
 .banner::after{content:"";position:absolute;inset:0;pointer-events:none}
-.banner.hero{background:#4A3226}
-.banner.tile{background:#26282D}
-.banner.t2{background:#2B3A55}
 .banner.hero{height:max(380px,38.9vw)}
 .banner.hero img{object-position:70% 30%}
 .banner.hero::after{background:linear-gradient(90deg,rgba(0,0,0,.6),rgba(0,0,0,0) 60%)}
@@ -172,7 +170,7 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
 @media (max-width:760px){.top{padding:8px 10px;gap:0}.top a{padding:0 7px;gap:6px;font-size:14px}.top a.logo{font-size:15px;margin-right:0;padding:0 6px 0 2px;gap:8px}.top a.logo svg{width:12px;height:11px}.top .profile{padding-left:4px}.avatar{width:28px;height:28px}}
 .head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);column-gap:24px;
   grid-template-areas:"title add" "sum add";align-items:start;
-  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:28px}
+  margin-bottom:28px}
 .head h1{grid-area:title;line-height:48px}
 .head .addcol{grid-area:add}
 .head .summary{grid-area:sum;margin-top:35px}
@@ -253,7 +251,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
 <div class="home" id="view-home" hidden>
   <h1 class="sr">Promotions</h1>
   <article class="banner hero">
-      <img src="assets/hero.jpg" alt="Generated image: A woman with long dark hair in a black bra, eyes closed, in a warm-lit bedroom">
+    <img src="assets/hero.jpg" alt="Generated image: A woman with long dark hair in a black bra, eyes closed, in a warm-lit bedroom">
     <div class="copy">
       <h2>The New Perfectly Fit Bra</h2>
       <p class="sub">The bra that does it all. Experience smooth, customized lift and all-day comfort.</p>
@@ -405,9 +403,12 @@ body{display:flex;flex-direction:column;min-height:100vh}
     return d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
   }
   function photos(i){
-    return (Array.isArray(i.images) ? i.images : []).filter(function(im){
-      return im && typeof im.id === "string" && /^[0-9a-f]{32}$/.test(im.id);
-    });
+    return (Array.isArray(i.images) ? i.images : []).filter(function(im){ return im && srcOf(im); });
+  }
+  function srcOf(im){
+    if(typeof im.id === "string" && /^[0-9a-f]{32}$/.test(im.id)) return "/_blob/" + im.id;
+    if(typeof im.src === "string" && /^https:\/\//i.test(im.src)) return im.src;
+    return null;
   }
   var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function gallery(i, imgs){
@@ -418,7 +419,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     var track = el("div","track");
     imgs.forEach(function(im, n){
       var img = document.createElement("img");
-      img.src = "/_blob/" + im.id;
+      img.src = srcOf(im);
       img.alt = im.alt || (name + ", photo " + (n+1));
       img.loading = n ? "lazy" : "eager";
       img.decoding = "async";
@@ -545,14 +546,130 @@ body{display:flex;flex-direction:column;min-height:100vh}
 
   var store = null, saving = false, local = false;
   var SEED = [
-    {id:"cos-1363954001", name:"Asymmetric Freshwater Pearl Ear Cuffs", shop:"COS", category:"Jewellery",
-     color:"Gold", size:"One size", price:45, currency:"USD", availability:"in_stock",
-     checkedAt:"2026-10-02T12:30:00Z",
-     url:"https://www.cos.com/en-us/women/accessories/jewellery/earrings/product/asymmetric-pearl-ear-cuffs-gold-1363954001"},
-    {id:"cos-1345022001", name:"Mismatched Knotted Earrings", shop:"COS", category:"Jewellery",
-     color:"Gold", size:"One size", price:45, currency:"USD", availability:"in_stock",
-     checkedAt:"2026-10-02T12:30:00Z",
-     url:"https://www.cos.com/en-us/women/accessories/jewellery/earrings/product/mismatched-knotted-earrings-gold-1345022001"}
+    {
+      "id": "ck-47H334G-P7A",
+      "name": "Smooth Cotton Rib Polo Sweater",
+      "shop": "Calvin Klein",
+      "category": "Tops",
+      "color": "Grey Heather",
+      "price": 47.4,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $79.00 (40% off). Sizes listed: S, L, XL",
+      "checkedAt": "2026-10-09T20:15:00Z",
+      "url": "https://www.calvinklein.us/en/women/apparel/tops/smooth-cotton-rib-polo-sweater/47H334G-P7A.html",
+      "images": [
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H334G_P7A_main?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Grey ribbed polo sweater worn with black trousers, front view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H334G_P7A_alternate1?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Close-up of the polo collar and ribbed knit"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H334G_P7A_alternate2?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Full-length view of the polo sweater with wide black trousers"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H334G_P7A_alternate3?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Polo sweater, back view"
+        }
+      ]
+    },
+    {
+      "id": "ck-44H417G-4XA",
+      "name": "Effortless Crepe Wide Leg Pleated Trousers",
+      "shop": "Calvin Klein",
+      "category": "Bottoms",
+      "color": "Marshmallow",
+      "price": 104.3,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $149.00 (30% off). Sizes listed: 0, 2, 4, 6, 8, 10, 14",
+      "checkedAt": "2026-10-09T20:15:00Z",
+      "url": "https://www.calvinklein.us/en/women/apparel/bottoms/effortless-crepe-wide-leg-pleated-trousers/44H417G-4XA.html",
+      "images": [
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/44H417G_4XA_main?wid=900&fmt=jpeg&qlt=85",
+          "alt": "White wide-leg trousers worn with a matching blazer, front view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/44H417G_4XA_alternate1?wid=900&fmt=jpeg&qlt=85",
+          "alt": "White wide-leg trousers with blazer, side view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/44H417G_4XA_alternate2?wid=900&fmt=jpeg&qlt=85",
+          "alt": "White wide-leg pleated trousers, waist to hem"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/44H417G_4XA_alternate3?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Close-up of the waistband and front pleat"
+        }
+      ]
+    },
+    {
+      "id": "ck-47B918G-LXL",
+      "name": "90s Straight Jeans",
+      "shop": "Calvin Klein",
+      "category": "Denim",
+      "color": "Soft Tint Bay",
+      "price": 59.4,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $99.00 (40% off). Waist 26 to 30, length 29 or 33",
+      "checkedAt": "2026-10-09T20:15:00Z",
+      "url": "https://www.calvinklein.us/en/women/apparel/denim/90s-straight-jeans/47B918G-LXL.html",
+      "images": [
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H947G_LXL_main?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Light blue straight jeans worn with a tan jacket, front view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H947G_LXL_alternate1?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Light blue straight jeans, side view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H947G_LXL_alternate2?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Straight jeans from waist to hem"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H947G_LXL_alternate3?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Close-up of the front pocket and waistband"
+        }
+      ]
+    },
+    {
+      "id": "ck-47H415G-UB1",
+      "name": "Monogram Logo Fleece Zip Hoodie",
+      "shop": "Calvin Klein",
+      "category": "Tops",
+      "color": "Black",
+      "price": 59.4,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $99.00 (40% off). Sizes listed: XS, S, M, L, XL",
+      "checkedAt": "2026-10-09T20:15:00Z",
+      "url": "https://www.calvinklein.us/en/women/apparel/tops/monogram-logo-fleece-zip-hoodie/47H415G-UB1.html",
+      "images": [
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H415G_UB1_main?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Black zip hoodie worn open over a black top, front view"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H415G_UB1_alternate1?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Close-up of the hoodie zip and small chest logo"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H415G_UB1_alternate2?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Full-length view of the hoodie with dark jeans"
+        },
+        {
+          "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H415G_UB1_alternate3?wid=900&fmt=jpeg&qlt=85",
+          "alt": "Black hoodie, back view"
+        }
+      ]
+    }
   ];
   var LS_KEY = "wishlist.added";
   function readLocal(){
