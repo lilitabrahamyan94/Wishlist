@@ -51,6 +51,18 @@ legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;
   display:flex;flex-direction:column}
+.card{position:relative}
+.rm{position:absolute;left:8px;top:8px;z-index:2;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;
+  display:grid;place-items:center;padding:0}
+.rm:disabled{cursor:default}
+@media (hover:hover){
+  .rm{opacity:0;transition:opacity .15s}
+  .card:hover .rm,.rm:focus-visible{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.rm{transition:none}}
+.undo{font:inherit;font-weight:600;color:var(--ink);background:none;border:0;padding:0;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .card.is-out .plate,.card.is-out .gallery,.card.is-out .name,.card.is-out .price{opacity:.55}
 .gallery{position:relative;aspect-ratio:4/5;background:var(--plate)}
 .track{display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
@@ -270,6 +282,12 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
       var a = st(i), card = el("article","card" + (a==="out_of_stock"?" is-out":""));
       var imgs = photos(i);
       card.appendChild(imgs.length ? gallery(i, imgs) : el("div","plate", i.shop||""));
+      var rm = el("button","rm");
+      rm.type = "button";
+      rm.setAttribute("aria-label","Remove " + (i.name||"item") + " from wishlist");
+      rm.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/></svg>';
+      rm.addEventListener("click", function(){removeItem(i, rm)});
+      card.appendChild(rm);
       var body = el("div","body");
       body.appendChild(el("span","badge " + STATUS[a].cls, STATUS[a].label));
       body.appendChild(el("h2","name", i.name||"Untitled item"));
@@ -316,11 +334,53 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
   }
   function goLocal(){
     local = true; loaded = true; failed = false;
-    items = sortItems(SEED.concat(readLocal()));
+    var g = getGone();
+    items = sortItems(SEED.concat(readLocal()).filter(function(i){return g.indexOf(i.id) < 0}));
     render();
   }
   function say(text, err){
     var m = $("add-msg"); m.textContent = text; m.className = "add-msg" + (err ? " err" : "");
+  }
+  var LS_GONE = "wishlist.removed", gone = null;
+  function getGone(){
+    if(!gone){
+      try{ var v = JSON.parse(localStorage.getItem(LS_GONE) || "[]"); gone = Array.isArray(v) ? v : []; }
+      catch(e){ gone = []; }
+    }
+    return gone;
+  }
+  function saveGone(){ try{ localStorage.setItem(LS_GONE, JSON.stringify(gone)); }catch(e){} }
+  function offerUndo(i, restore){
+    say("Removed " + (i.name||"item") + ". ");
+    var u = el("button","undo","Undo");
+    u.type = "button";
+    u.addEventListener("click", function(){ u.disabled = true; restore(); });
+    $("add-msg").appendChild(u);
+  }
+  function removeItem(i, btn){
+    if(!i.id || (!store && !local)){ say("The list isn't connected yet. Reload the page and try again.", true); return; }
+    if(local){
+      var g = getGone();
+      g.push(i.id); saveGone(); goLocal();
+      offerUndo(i, function(){
+        var k = g.indexOf(i.id);
+        if(k >= 0) g.splice(k, 1);
+        saveGone(); goLocal(); say("Restored.");
+      });
+      return;
+    }
+    btn.disabled = true;
+    var data = Object.assign({}, i); delete data.id;
+    var path = "items/" + i.id;
+    store.doc(path).delete().then(function(){
+      offerUndo(i, function(){
+        store.doc(path).set(data).then(function(){ say("Restored."); },
+          function(){ say("It couldn't be restored. Add the link again.", true); });
+      });
+    }, function(){
+      btn.disabled = false;
+      say("The product wasn't removed. Try again in a moment.", true);
+    });
   }
   function keyOf(u){
     try{ var x = new URL(u); return (x.hostname.replace(/^www\./,"") + x.pathname.replace(/\/+$/,"")).toLowerCase(); }
