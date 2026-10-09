@@ -125,8 +125,8 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
 .banner.tile{background:#26282D}
 .banner.t2{background:#2B3A55}
 .banner.hero{height:max(380px,38.9vw)}
-.banner.hero img{object-position:45% 30%}
-.banner.hero::after{background:linear-gradient(90deg,rgba(0,0,0,.38),rgba(0,0,0,0) 55%)}
+.banner.hero img{object-position:70% 30%}
+.banner.hero::after{background:linear-gradient(90deg,rgba(0,0,0,.6),rgba(0,0,0,0) 60%)}
 .banner.tile{min-width:0;height:max(320px,25vw)}
 .banner.tile::after{background:linear-gradient(0deg,rgba(0,0,0,.66),rgba(0,0,0,0) 62%)}
 .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px;margin-top:2px}
@@ -165,7 +165,7 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
   .banner.hero::after{background:linear-gradient(0deg,rgba(0,0,0,.7),rgba(0,0,0,0) 70%)}
   .hero .copy{left:16px;right:16px;bottom:20px;max-width:none}
   .tile .copy{left:16px;right:16px;bottom:16px}
-  .banner.t2 img{object-position:left}
+  .banner.t2 img{object-position:72% 50%}
   .coupon .stub{width:136px}
 }
 .note{color:var(--muted);font-size:13px;margin:20px 0 0}
@@ -253,14 +253,16 @@ body{display:flex;flex-direction:column;min-height:100vh}
 <div class="home" id="view-home" hidden>
   <h1 class="sr">Promotions</h1>
   <article class="banner hero">
+      <img src="assets/hero.jpg" alt="Generated image: A woman with long dark hair in a black bra, eyes closed, in a warm-lit bedroom">
     <div class="copy">
-      <h2>Teyana Taylor in the New Perfectly Fit Bra</h2>
+      <h2>The New Perfectly Fit Bra</h2>
       <p class="sub">The bra that does it all. Experience smooth, customized lift and all-day comfort.</p>
       <a class="cta" href="#" data-soon>Shop the Campaign</a>
     </div>
   </article>
   <div class="duo">
     <article class="banner tile">
+      <img src="assets/tile1.jpg" alt="Generated image: Two people in leather jackets sitting back to back on stone steps">
       <div class="copy">
         <h2>The Leather Jacket</h2>
         <p class="sub">Icons of the season, cut in rich leather.</p>
@@ -268,6 +270,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       </div>
     </article>
     <article class="banner tile t2">
+      <img src="assets/tile2.jpg" alt="Generated image: A man in a black leather jacket and blue jeans beside a mirror in a beige room">
       <div class="copy">
         <h2>The ’90s Straight Jean</h2>
         <p class="sub">Relaxed denim and everyday underwear, made to be worn together.</p>
