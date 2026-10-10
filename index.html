@@ -39,7 +39,7 @@ header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
 h1{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:0}
 .summary{color:var(--muted);margin:0}
 .summary b{color:var(--in);font-weight:600}
-.layout{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
 aside{position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
 fieldset{border:0;padding:0;margin:0 0 28px;min-width:0}
 legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom:8px}
@@ -55,7 +55,7 @@ legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;
   display:flex;flex-direction:column}
 .card{position:relative}
-.rm{position:absolute;left:8px;top:8px;z-index:2;width:44px;height:44px;border-radius:50%;
+.rm{position:absolute;right:8px;top:8px;z-index:2;width:44px;height:44px;border-radius:50%;
   border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;
   display:grid;place-items:center;padding:0}
 .rm:disabled{cursor:default}
@@ -215,11 +215,27 @@ body{display:flex;flex-direction:column;min-height:100vh}
   .top .profile{grid-area:profile}
   .top .menu{grid-area:menu;justify-content:center}
 }
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:6px 10px;flex-wrap:wrap}
+.toprow .checked{white-space:nowrap}
+.body a.open{align-self:flex-start;padding:2px 0}
+.card.ad{justify-content:flex-end;min-height:320px;padding:20px;border:0;background:#14213D;color:#FFFFFF;
+  font-family:"Outfit","Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif}
+.card.ad .adtag{position:absolute;top:10px;left:10px;padding:2px 8px;border-radius:4px;background:#FFFFFF;color:#1A2233;
+  font:600 12px/1.5 "Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif}
+.card.ad .adbrand{margin:0 0 10px;font:600 13px/1.4 "Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:.08em;text-transform:uppercase}
+.card.ad h2{margin:0;font-weight:300;font-size:clamp(22px,1.4vw + 14px,32px);line-height:1.05;letter-spacing:-0.03em}
+.card.ad .adsub{margin:12px 0 0;font-weight:300;font-size:14px;line-height:1.5}
+.card.ad .adcta{align-self:flex-start;margin-top:8px;padding:12px 0 4px;color:#FFFFFF;text-decoration:none;font-size:14px;
+  border-bottom:1px solid currentColor}
+.card.ad .adcta:hover{opacity:.8}
+.card.ad :focus-visible{outline-color:#FFFFFF}
+@media (max-width:760px){.card.ad{min-height:240px;padding:14px}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (max-width:760px){
   .wrap{padding:20px 16px 48px}
   h1{font-size:28px}
-  .layout{grid-template-columns:1fr;gap:20px}
+  .layout{grid-template-columns:minmax(0,1fr);gap:20px}
   aside{position:static}
   fieldset{margin-bottom:14px}
   .opts{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
@@ -421,6 +437,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     var track = el("div","track");
     imgs.forEach(function(im, n){
       var img = document.createElement("img");
+      if(!im.id) img.referrerPolicy = "no-referrer";
       img.src = srcOf(im);
       img.alt = im.alt || (name + ", photo " + (n+1));
       img.loading = n ? "lazy" : "eager";
@@ -450,6 +467,21 @@ body{display:flex;flex-direction:column;min-height:100vh}
       sync();
     }
     return g;
+  }
+  // Sponsored card shown after every fifth product. Sample content.
+  var AD = {brand:"GoDaddy", headline:"Name your big idea.", sub:"Find the domain that fits your brand.",
+    cta:"Search domains", url:"https://www.godaddy.com/"};
+  function adCard(){
+    var card = el("article","card ad");
+    card.setAttribute("aria-label","Advertisement from " + AD.brand);
+    card.appendChild(el("span","adtag","Ad"));
+    card.appendChild(el("p","adbrand",AD.brand));
+    card.appendChild(el("h2",null,AD.headline));
+    card.appendChild(el("p","adsub",AD.sub));
+    var link = el("a","adcta",AD.cta);
+    link.href = AD.url; link.target = "_blank"; link.rel = "noopener noreferrer sponsored";
+    card.appendChild(link);
+    return card;
   }
   function matches(i, skip){
     return (skip==="category" || filter.category==="all" || (i.category||"Other")===filter.category)
@@ -514,7 +546,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       e2.appendChild(document.createTextNode("Pick a different category, availability or shop."));
       grid.appendChild(e2); return;
     }
-    shown.forEach(function(i){
+    shown.forEach(function(i, n){
       var a = st(i), card = el("article","card" + (a==="out_of_stock"?" is-out":""));
       var imgs = photos(i);
       card.appendChild(imgs.length ? gallery(i, imgs) : el("div","plate", i.shop||""));
@@ -525,24 +557,25 @@ body{display:flex;flex-direction:column;min-height:100vh}
       rm.addEventListener("click", function(){removeItem(i, rm)});
       card.appendChild(rm);
       var body = el("div","body");
-      body.appendChild(el("span","badge " + STATUS[a].cls, STATUS[a].label));
+      var top = el("div","toprow");
+      top.appendChild(el("span","badge " + STATUS[a].cls, STATUS[a].label));
+      var d = fmtDate(i.checkedAt);
+      if(d) top.appendChild(el("span","checked","Checked " + d));
+      body.appendChild(top);
       body.appendChild(el("h2","name", i.name||"Untitled item"));
-      var meta = [i.category, i.color, i.size].filter(Boolean).join(", ");
-      if(meta) body.appendChild(el("p","meta",meta));
-      if(i.note) body.appendChild(el("p","meta",i.note));
-      var foot = el("div","foot");
-      foot.appendChild(el("span","price",fmtPrice(i)));
       var u = safeUrl(i.url);
       if(u){
         var link = el("a","open","Open at " + (i.shop||"shop"));
         link.href = u; link.target = "_blank"; link.rel = "noopener noreferrer";
-        foot.appendChild(link);
+        body.appendChild(link);
       }
+      if(i.note) body.appendChild(el("p","meta",i.note));
+      var foot = el("div","foot");
+      foot.appendChild(el("span","price",fmtPrice(i)));
       body.appendChild(foot);
-      var d = fmtDate(i.checkedAt);
-      if(d) body.appendChild(el("p","checked","Checked " + d));
       card.appendChild(body);
       grid.appendChild(card);
+      if((n + 1) % 5 === 0) grid.appendChild(adCard());
     });
   }
 
@@ -567,7 +600,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       "price": 47.4,
       "currency": "USD",
       "availability": "in_stock",
-      "note": "Was $79.00 (40% off). Sizes listed: S, L, XL",
+      "note": "Was $79.00 (40% off)",
       "checkedAt": "2026-10-09T20:15:00Z",
       "url": "https://www.calvinklein.us/en/women/apparel/tops/smooth-cotton-rib-polo-sweater/47H334G-P7A.html",
       "images": [
@@ -598,7 +631,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       "price": 104.3,
       "currency": "USD",
       "availability": "in_stock",
-      "note": "Was $149.00 (30% off). Sizes listed: 0, 2, 4, 6, 8, 10, 14",
+      "note": "Was $149.00 (30% off)",
       "checkedAt": "2026-10-09T20:15:00Z",
       "url": "https://www.calvinklein.us/en/women/apparel/bottoms/effortless-crepe-wide-leg-pleated-trousers/44H417G-4XA.html",
       "images": [
@@ -629,7 +662,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       "price": 59.4,
       "currency": "USD",
       "availability": "in_stock",
-      "note": "Was $99.00 (40% off). Waist 26 to 30, length 29 or 33",
+      "note": "Was $99.00 (40% off)",
       "checkedAt": "2026-10-09T20:15:00Z",
       "url": "https://www.calvinklein.us/en/women/apparel/denim/90s-straight-jeans/47B918G-LXL.html",
       "images": [
@@ -660,7 +693,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       "price": 59.4,
       "currency": "USD",
       "availability": "in_stock",
-      "note": "Was $99.00 (40% off). Sizes listed: XS, S, M, L, XL",
+      "note": "Was $99.00 (40% off)",
       "checkedAt": "2026-10-09T20:15:00Z",
       "url": "https://www.calvinklein.us/en/women/apparel/tops/monogram-logo-fleece-zip-hoodie/47H415G-UB1.html",
       "images": [
@@ -679,6 +712,99 @@ body{display:flex;flex-direction:column;min-height:100vh}
         {
           "src": "https://calvinklein.scene7.com/is/image/CalvinKlein/47H415G_UB1_alternate3?wid=900&fmt=jpeg&qlt=85",
           "alt": "Black hoodie, back view"
+        }
+      ]
+    },
+    {
+      "id": "cos-1352387003",
+      "name": "Merino Wool Zip-Up Polo Shirt",
+      "shop": "COS",
+      "category": "Tops",
+      "color": "Navy / Red / Striped",
+      "price": 96.75,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $129.00 (25% off)",
+      "checkedAt": "2026-10-10T10:25:00Z",
+      "url": "https://www.cos.com/en-us/women/womenswear/tops/polo-shirts/product/merino-wool-zip-up-polo-shirt-navy-red-striped-1352387003",
+      "images": [
+        {
+          "src": "https://media.cos.com/assets/001/e5/06/e50630a3afbd12c5eecc6ec236234f550e83ab79_xxl-1.jpg?imwidth=900",
+          "alt": "Striped navy and red polo shirt worn with jeans and a brown bag"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/67/cf/67cf78e7de53e28b914c0f0a97906ac3a8b932ab_xxl-1.jpg?imwidth=900",
+          "alt": "Striped polo shirt with wide jeans, full-length front view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/b6/2c/b62c9a2a2966b919c2aab47465ed41b413fab92a_xxl-1.jpg?imwidth=900",
+          "alt": "Striped polo shirt, hands in pockets, front view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/f2/b3/f2b38168d16037f4935bbfcce45744ae015ee84e_xxl-1.jpg?imwidth=900",
+          "alt": "Striped polo shirt, side view"
+        }
+      ]
+    },
+    {
+      "id": "cos-1344064001",
+      "name": "Paneled Elasticated Barrel-Leg Pants",
+      "shop": "COS",
+      "category": "Bottoms",
+      "color": "Navy",
+      "price": 96.75,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $129.00 (25% off)",
+      "checkedAt": "2026-10-10T10:25:00Z",
+      "url": "https://www.cos.com/en-us/women/womenswear/trousers/barrel-leg/product/panelled-elasticated-barrel-leg-trousers-navy-1344064001",
+      "images": [
+        {
+          "src": "https://media.cos.com/assets/001/aa/71/aa71ccc740e46efc7e0fef473b087caafc85227c_xxl-1.jpg?imwidth=900",
+          "alt": "Navy barrel-leg pants worn with a matching navy top, front view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/2a/32/2a323b743245727d7f349027d9a7450b7029fa1c_xxl-1.jpg?imwidth=900",
+          "alt": "Navy barrel-leg pants, side view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/db/94/db94c4f8dd0d692f52ded534f0cd90622103818c_xxl-1.jpg?imwidth=900",
+          "alt": "Navy barrel-leg pants, back view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/18/1e/181e3b9a603e630dae0882421612ad3e1092a47d_xxl-1.jpg?imwidth=900",
+          "alt": "Close-up of the elasticated waist and side pocket"
+        }
+      ]
+    },
+    {
+      "id": "cos-1350646002",
+      "name": "Belted Double-Faced Wool-Blend Long Coat",
+      "shop": "COS",
+      "category": "Coats",
+      "color": "Brown",
+      "price": 321.75,
+      "currency": "USD",
+      "availability": "in_stock",
+      "note": "Was $429.00 (25% off)",
+      "checkedAt": "2026-10-10T10:25:00Z",
+      "url": "https://www.cos.com/en-us/women/womenswear/coatsjackets/coats/product/belted-double-faced-wool-blend-long-coat-brown-1350646002",
+      "images": [
+        {
+          "src": "https://media.cos.com/assets/001/d3/f8/d3f871b2495869105a50f3800ae488b466f001ab_xxl-1.jpg?imwidth=900",
+          "alt": "Long brown belted wool coat, front view with a black bag"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/ea/01/ea01351abcdcc0b5d3d833204a5f29d4fcca1047_xxl-1.jpg?imwidth=900",
+          "alt": "Long brown wool coat worn open, front view"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/66/35/66358e3c032b68e4f76de002b4ef267443955859_xxl-1.jpg?imwidth=900",
+          "alt": "Close-up of the coat's collar and buttons"
+        },
+        {
+          "src": "https://media.cos.com/assets/001/81/99/81990f0e803b70cdd0aed9884f10326ae7d5bb77_xxl-1.jpg?imwidth=900",
+          "alt": "Long brown wool coat, side view"
         }
       ]
     }
