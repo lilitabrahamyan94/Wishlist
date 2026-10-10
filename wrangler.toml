@@ -1,0 +1,5 @@
+# Cloudflare Worker settings for the product lookup backend (backend/worker.js).
+# The name must match the Worker's name in the Cloudflare dashboard.
+name = "wishlist"
+main = "backend/worker.js"
+compatibility_date = "2026-06-01"

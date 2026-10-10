@@ -9,18 +9,15 @@ product's name, photos, price and stock, read from the data shops publish for se
 
 ## Deploy
 
-With the command line (needs Node.js and a free Cloudflare account):
+The Worker is connected to this repository in Cloudflare (Workers & Pages), so every push to
+`main` publishes it automatically. Its settings are in `wrangler.toml` at the repository root.
 
-    cd backend
-    npx wrangler deploy
+To publish by hand instead (needs Node.js and a Cloudflare account), run `npx wrangler deploy`
+from the repository root.
 
-Or without it: in the Cloudflare dashboard create a new Worker, replace its code with the
-contents of `worker.js`, and deploy.
+Put the Worker's `workers.dev` address in `index.html`:
 
-Either way you get an address like `https://whishlist-backend.<your-name>.workers.dev`.
-Put it in `index.html`:
-
-    var API_URL = "https://whishlist-backend.<your-name>.workers.dev";
+    var API_URL = "https://wishlist.<your-name>.workers.dev";
 
 While `API_URL` is empty the page works as before and adds links without details.
 
