@@ -140,24 +140,32 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
   font-weight:400;font-size:clamp(14px,.86vw,18px);border-bottom:1px solid currentColor}
 .banner .cta:hover{opacity:.8}
 .banner :focus-visible{outline-color:#FFFFFF}
-.coupons{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:20px}
-.coupon{display:flex;background:var(--plate);border-radius:10px;min-height:150px}
-.coupon .offer{flex:1;min-width:0;padding:20px}
-.cbrand{margin:0 0 10px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-weight:600;font-size:13px;
-  letter-spacing:.08em;text-transform:uppercase}
-.cbrand .badge{letter-spacing:0;text-transform:none}
-.coupon h2{margin:0 0 8px;font-family:"Outfit","Schibsted Grotesk",sans-serif;font-weight:300;font-size:30px;
-  line-height:1.1;letter-spacing:-0.03em}
-.coupon .stub{position:relative;flex:none;width:168px;padding:16px 12px;border-left:2px dashed var(--paper);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
-.coupon .stub::before,.coupon .stub::after{content:"";position:absolute;left:-11px;width:20px;height:20px;
-  border-radius:50%;background:var(--paper)}
-.coupon .stub::before{top:-10px}
-.coupon .stub::after{bottom:-10px}
-.clabel{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-.coupon code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;font-size:15px;letter-spacing:.03em}
-.copy-btn{font:inherit;font-size:13px;font-weight:600;min-height:44px;padding:0 14px;border:0;border-radius:8px;
-  background:var(--ink);color:var(--paper);cursor:pointer}
+.coupons{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:20px}
+.coupon{display:flex;min-height:172px;background:var(--surface);border:1px dashed var(--line);border-radius:8px;overflow:hidden}
+.ctab{flex:none;width:40px;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
+.ctab span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.coupon.sponsored .ctab{background:#E3D9F5;color:#2B2140}
+.cbody{flex:1;min-width:0;display:flex;flex-direction:column;padding:18px 18px 10px}
+.cbody h3{margin:0;font-family:"Outfit","Schibsted Grotesk",sans-serif;font-weight:400;font-size:25px;line-height:1.15;letter-spacing:-0.02em}
+.coffer{margin:6px 0 0;font-size:15px;line-height:1.45}
+.cmeta{margin:8px 0 0;color:var(--muted);font-size:13px}
+.cfoot{margin-top:auto;padding-top:6px;display:flex;align-items:center;justify-content:space-between;gap:4px 14px;flex-wrap:wrap}
+.clink{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0;border:0;background:none;cursor:pointer;
+  font:inherit;font-size:14px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.clink:hover{color:var(--accent)}
+.clink svg{flex:none}
+.clink code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;letter-spacing:.02em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:99px;background:none;color:var(--ink);
+  font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip .n{margin-left:6px;opacity:.65;font-variant-numeric:tabular-nums}
+.home-coupons{max-width:1240px;margin:0 auto;padding:44px 24px 48px}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px}
+.sechead h2{margin:0;font-family:"Outfit","Schibsted Grotesk",sans-serif;font-weight:400;font-size:32px;line-height:1.1;letter-spacing:-0.02em}
+.sechead a{font-weight:700;color:var(--ink);text-underline-offset:4px;white-space:nowrap}
+.sechead a:hover{color:var(--accent)}
 @media (max-width:760px){
   .duo{grid-template-columns:minmax(0,1fr)}
   .banner.tile{height:320px}
@@ -166,7 +174,8 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
   .hero .copy{left:16px;right:16px;bottom:20px;max-width:none}
   .tile .copy{left:16px;right:16px;bottom:16px}
   .banner.t2 img{object-position:72% 50%}
-  .coupon .stub{width:136px}
+  .home-coupons{padding:32px 16px 36px}
+  .sechead h2{font-size:26px}
 }
 .note{color:var(--muted);font-size:13px;margin:20px 0 0}
 @media (max-width:760px){.top{padding:8px 10px;gap:0}.top a{padding:0 7px;gap:6px;font-size:14px}.top a.logo{font-size:15px;margin-right:0;padding:0 6px 0 2px;gap:8px}.top a.logo svg{width:12px;height:11px}.top .profile{padding-left:4px}.avatar{width:28px;height:28px}}
@@ -276,6 +285,14 @@ body{display:flex;flex-direction:column;min-height:100vh}
       <a class="cta" href="#" data-soon>Shop the Campaign</a>
     </div>
   </article>
+  <section class="home-coupons" aria-labelledby="home-coupons-title">
+    <div class="sechead">
+      <h2 id="home-coupons-title">Coupons and Deals</h2>
+      <a href="#coupons">See all</a>
+    </div>
+    <div class="coupons" id="home-coupons"></div>
+    <p class="note">Sample offers and codes. They won't work at checkout.</p>
+  </section>
   <div class="duo">
     <article class="banner tile">
       <img src="assets/tile1.jpg" alt="Generated image: Two people in leather jackets sitting back to back on stone steps">
@@ -300,44 +317,8 @@ body{display:flex;flex-direction:column;min-height:100vh}
     <h1>Coupons</h1>
     <p class="summary">Promo codes from brands</p>
   </header>
-  <div class="coupons">
-    <article class="coupon">
-      <div class="offer">
-        <p class="cbrand">Calvin Klein <span class="badge b-low">Sample</span></p>
-        <h2>20% off denim</h2>
-        <p class="meta">Full-price styles. Ends [date].</p>
-      </div>
-      <div class="stub">
-        <span class="clabel">Code</span>
-        <code>SAMPLE-CK20</code>
-        <button type="button" class="copy-btn" data-code="SAMPLE-CK20">Copy code</button>
-      </div>
-    </article>
-    <article class="coupon">
-      <div class="offer">
-        <p class="cbrand">Gap <span class="badge b-low">Sample</span></p>
-        <h2>15% off your order</h2>
-        <p class="meta">One use per customer. Ends [date].</p>
-      </div>
-      <div class="stub">
-        <span class="clabel">Code</span>
-        <code>SAMPLE-GAP15</code>
-        <button type="button" class="copy-btn" data-code="SAMPLE-GAP15">Copy code</button>
-      </div>
-    </article>
-    <article class="coupon">
-      <div class="offer">
-        <p class="cbrand">Victoria’s Secret <span class="badge b-low">Sample</span></p>
-        <h2>Free shipping over $50</h2>
-        <p class="meta">Standard delivery. Ends [date].</p>
-      </div>
-      <div class="stub">
-        <span class="clabel">Code</span>
-        <code>SAMPLE-VS50</code>
-        <button type="button" class="copy-btn" data-code="SAMPLE-VS50">Copy code</button>
-      </div>
-    </article>
-  </div>
+  <div class="chips" id="coupon-cats" role="group" aria-label="Coupon category"></div>
+  <div class="coupons" id="coupon-grid"></div>
   <p class="note">Sample offers and codes. They won't work at checkout.</p>
 </div>
 <div class="wrap" id="view-wishlist" hidden>
@@ -957,16 +938,77 @@ body{display:flex;flex-direction:column;min-height:100vh}
   Array.prototype.forEach.call(document.querySelectorAll("a[data-soon]"), function(a){
     a.addEventListener("click", function(ev){ ev.preventDefault(); });
   });
-  Array.prototype.forEach.call(document.querySelectorAll(".copy-btn"), function(btn){
-    btn.addEventListener("click", function(){
-      var done = function(ok){
-        btn.textContent = ok ? "Copied" : "Copy failed";
-        setTimeout(function(){ btn.textContent = "Copy code"; }, 1600);
-      };
-      try{ navigator.clipboard.writeText(btn.getAttribute("data-code")).then(function(){done(true)}, function(){done(false)}); }
-      catch(e){ done(false); }
-    });
-  });
+  // Sample coupons. tag: "Exclusive" cards have a code; "Sponsored" cards only link to the store.
+  var COUPONS = [
+    {brand:"Calvin Klein", offer:"20% off denim", cat:"Fashion", tag:"Exclusive", code:"SAMPLE-CK20", url:"https://www.calvinklein.us/"},
+    {brand:"COS", offer:"Free shipping on orders over $100", cat:"Fashion", tag:"Exclusive", code:"SAMPLE-COS100", url:"https://www.cos.com/"},
+    {brand:"GoDaddy", offer:"30% off your first .co domain", cat:"Tech", tag:"Sponsored", url:"https://www.godaddy.com/"},
+    {brand:"Sephora", offer:"10% off your first order", cat:"Beauty", tag:"Exclusive", code:"SAMPLE-SEPH10", url:"https://www.sephora.com/"},
+    {brand:"Gap", offer:"15% off your order", cat:"Fashion", tag:"Exclusive", code:"SAMPLE-GAP15", url:"https://www.gap.com/"},
+    {brand:"Victoria\u2019s Secret", offer:"Free shipping over $50", cat:"Fashion", tag:"Exclusive", code:"SAMPLE-VS50", url:"https://www.victoriassecret.com/"},
+    {brand:"iHerb", offer:"20% off wellness essentials", cat:"Beauty", tag:"Exclusive", code:"SAMPLE-IH20", url:"https://www.iherb.com/"},
+    {brand:"IKEA", offer:"Free delivery on orders over $50", cat:"Home", tag:"Sponsored", url:"https://www.ikea.com/"}
+  ];
+  var couponCat = "all";
+  var ICON_COPY = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 13.500h6a1.500 1.500 0 0 0 1.500-1.500V6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  var ICON_BAG = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5.500h10l-.7 8H3.700z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M5.500 7V4.500a2.500 2.500 0 0 1 5 0V7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  function storeLink(c, label, icon){
+    var a = el("a","clink");
+    a.href = c.url; a.target = "_blank";
+    a.rel = "noopener noreferrer" + (c.tag === "Sponsored" ? " sponsored" : "");
+    a.appendChild(el("span",null,label));
+    if(icon) a.insertAdjacentHTML("beforeend", icon);
+    return a;
+  }
+  function couponCard(c){
+    var sponsored = c.tag === "Sponsored";
+    var card = el("article","coupon" + (sponsored ? " sponsored" : ""));
+    var tab = el("div","ctab"); tab.appendChild(el("span",null,c.tag)); card.appendChild(tab);
+    var body = el("div","cbody");
+    body.appendChild(el("h3",null,c.brand));
+    body.appendChild(el("p","coffer",c.offer));
+    body.appendChild(el("p","cmeta","Sample offer"));
+    var foot = el("div","cfoot");
+    if(c.code){
+      var btn = el("button","clink"); btn.type = "button";
+      var label = el("span",null,"Get Coupon");
+      btn.appendChild(label); btn.insertAdjacentHTML("beforeend", ICON_COPY);
+      btn.addEventListener("click", function(){
+        var shown = function(ok){
+          label.textContent = "";
+          label.appendChild(el("code",null,c.code));
+          label.appendChild(document.createTextNode(ok ? " copied" : ""));
+        };
+        try{ navigator.clipboard.writeText(c.code).then(function(){shown(true)}, function(){shown(false)}); }
+        catch(e){ shown(false); }
+      });
+      foot.appendChild(btn);
+      foot.appendChild(storeLink(c, "Go to store"));
+    } else {
+      foot.appendChild(storeLink(c, "Shop Now", ICON_BAG));
+    }
+    body.appendChild(foot); card.appendChild(body);
+    return card;
+  }
+  function renderCoupons(){
+    var cats = {}, host = $("coupon-cats"), grid = $("coupon-grid"), home = $("home-coupons");
+    COUPONS.forEach(function(c){ cats[c.cat] = (cats[c.cat]||0) + 1; });
+    host.textContent = "";
+    [{v:"all", label:"All", n:COUPONS.length}].concat(Object.keys(cats).sort().map(function(k){ return {v:k, label:k, n:cats[k]}; }))
+      .forEach(function(o){
+        var b = el("button","chip"); b.type = "button";
+        b.setAttribute("aria-pressed", String(couponCat === o.v));
+        b.appendChild(document.createTextNode(o.label));
+        b.appendChild(el("span","n",String(o.n)));
+        b.addEventListener("click", function(){ couponCat = o.v; renderCoupons(); });
+        host.appendChild(b);
+      });
+    grid.textContent = "";
+    COUPONS.filter(function(c){ return couponCat === "all" || c.cat === couponCat; })
+      .forEach(function(c){ grid.appendChild(couponCard(c)); });
+    if(!home.firstChild) COUPONS.slice(0, 4).forEach(function(c){ home.appendChild(couponCard(c)); });
+  }
+  renderCoupons();
   var pbtn = $("nav-profile"), pop = $("profile-menu");
   function setMenu(open){ pop.hidden = !open; pbtn.setAttribute("aria-expanded", String(open)); }
   pbtn.addEventListener("click", function(ev){ ev.stopPropagation(); setMenu(pop.hidden); });
