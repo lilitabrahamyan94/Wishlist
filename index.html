@@ -252,10 +252,10 @@ body{display:flex;flex-direction:column;min-height:100vh}
 .fgroup.closed .ftoggle svg{transform:rotate(180deg)}
 .fopts{display:flex;flex-direction:column}
 .fopts[hidden]{display:none}
-.radio{display:flex;align-items:center;gap:12px;min-height:40px;color:var(--muted);font-size:13px;cursor:pointer}
-.radio input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-items:center;width:20px;height:20px;margin:0;
+.radio{display:flex;align-items:center;gap:10px;min-height:30px;color:var(--muted);font-size:13px;cursor:pointer}
+.radio input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-items:center;width:16px;height:16px;margin:0;
   border:1.5px solid var(--muted);border-radius:50%;background:var(--surface);cursor:pointer}
-.radio input::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .12s}
+.radio input::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .12s}
 .radio input:checked{border-color:var(--ink)}
 .radio input:checked::before{transform:scale(1)}
 .radio input:checked + .rtext{color:var(--ink);font-weight:500}
