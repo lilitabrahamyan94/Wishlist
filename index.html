@@ -40,7 +40,9 @@ h1{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:
 .summary{color:var(--muted);margin:0}
 .summary b{color:var(--in);font-weight:600}
 .layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
-aside{position:sticky;top:calc(81px + env(safe-area-inset-top,0px));max-height:calc(100vh - 97px);overflow-y:auto}
+aside{position:sticky;top:calc(81px + env(safe-area-inset-top,0px));max-height:calc(100vh - 97px);overflow-y:auto;scrollbar-width:none}
+aside::-webkit-scrollbar,.fbody::-webkit-scrollbar{display:none}
+.fbody{scrollbar-width:none}
 fieldset{border:0;padding:0;margin:0 0 28px;min-width:0}
 legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom:8px}
 .opts{display:flex;flex-direction:column;gap:2px}
@@ -52,7 +54,7 @@ legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom
 .opt .n{font-size:13px;opacity:.7;font-variant-numeric:tabular-nums}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+.card{background:var(--surface);border-radius:10px;overflow:hidden;
   display:flex;flex-direction:column}
 .card{position:relative}
 .rm{position:absolute;right:8px;top:8px;z-index:2;width:44px;height:44px;border-radius:50%;
@@ -92,7 +94,7 @@ legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom
 .b-unk{color:var(--unk);background:var(--unk-bg)}
 .name{font-weight:600;font-size:16px;line-height:1.3;margin:4px 0 0}
 .meta{color:var(--muted);font-size:13px;margin:0}
-.foot{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:auto;padding-top:10px}
+.foot{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin-top:auto;padding-top:10px}
 .price{font-weight:600;font-variant-numeric:tabular-nums}
 a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px}
 .checked{color:var(--muted);font-size:12px;margin:0}
@@ -181,10 +183,10 @@ a.open{color:var(--ink);font-size:13px;font-weight:500;text-underline-offset:3px
 @media (max-width:760px){.top{padding:8px 10px;gap:0}.top a{padding:0 7px;gap:6px;font-size:14px}.top a.logo{font-size:15px;margin-right:0;padding:0 6px 0 2px;gap:8px}.top a.logo svg{width:12px;height:11px}.top .profile{padding-left:4px}.avatar{width:28px;height:28px}}
 .head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);column-gap:24px;
   grid-template-areas:"title add" "sum add";align-items:start;
-  margin-bottom:28px}
+  margin-bottom:14px}
 .head h1{grid-area:title;line-height:48px}
 .head .addcol{grid-area:add}
-.head .summary{grid-area:sum;margin-top:35px}
+.head .summary{grid-area:sum;margin-top:10px}
 .head .add{max-width:none}
 .head .add-msg{margin:6px 0 0}
 @media (max-width:760px){
@@ -240,17 +242,17 @@ body{display:flex;flex-direction:column;min-height:100vh}
 .card.ad .adcta:hover{opacity:.8}
 .card.ad :focus-visible{outline-color:#FFFFFF}
 @media (max-width:760px){.card.ad{min-height:240px;padding:14px}}
-.fhead,.fopen,#f-view{display:none}
+.fhead,.fopen,.ffoot{display:none}
 .fgroup{padding:4px 0 12px;border-bottom:1px solid var(--line)}
 .fgroup.closed{padding-bottom:4px}
 .fgroup h3{margin:0;font-size:inherit}
 .ftoggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0;border:0;
-  background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+  background:none;color:var(--ink);font:inherit;font-size:13px;font-weight:600;text-align:left;cursor:pointer}
 .ftoggle svg{flex:none;color:var(--muted);transition:transform .15s}
 .fgroup.closed .ftoggle svg{transform:rotate(180deg)}
 .fopts{display:flex;flex-direction:column}
 .fopts[hidden]{display:none}
-.radio{display:flex;align-items:center;gap:12px;min-height:40px;color:var(--muted);cursor:pointer}
+.radio{display:flex;align-items:center;gap:12px;min-height:40px;color:var(--muted);font-size:13px;cursor:pointer}
 .radio input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-items:center;width:20px;height:20px;margin:0;
   border:1.5px solid var(--muted);border-radius:50%;background:var(--surface);cursor:pointer}
 .radio input::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .12s}
@@ -261,6 +263,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
 .radio .n{color:var(--muted);font-weight:400}
 .radio.none{opacity:.5}
 .ffoot{display:flex;gap:10px;padding:18px 0 4px}
+@media (min-width:761px){.ffoot{display:none}}
 .pill{flex:1;min-height:48px;padding:0 18px;border-radius:99px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .pill.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
 .pill.ghost:hover{border-color:var(--ink)}
@@ -279,9 +282,12 @@ body{display:flex;flex-direction:column;min-height:100vh}
   #f-close{display:grid;place-items:center;width:44px;height:44px;border:0;background:none;color:var(--ink);cursor:pointer}
   .fbody{flex:1;overflow-y:auto;padding:0 20px}
   .radio{min-height:48px}
-  .ffoot{padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
-  #f-view{display:block}
+  .ffoot{display:flex;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
 }
+.card:not(.ad){overflow:visible}
+.card:not(.ad) .gallery,.card:not(.ad) .plate{border-radius:10px}
+.card:not(.ad) .body{padding:12px 2px 14px}
+.foot .was{color:var(--muted);font-size:13px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (max-width:760px){
   .wrap{padding:20px 16px 48px}
@@ -387,7 +393,6 @@ body{display:flex;flex-direction:column;min-height:100vh}
       </div>
       <div class="fbody" id="f-groups"></div>
       <div class="ffoot">
-        <button type="button" class="pill ghost" id="f-clear">Clear All</button>
         <button type="button" class="pill solid" id="f-view">View Items</button>
       </div>
     </aside>
@@ -614,7 +619,6 @@ body{display:flex;flex-direction:column;min-height:100vh}
 
     var grid = $("grid"), shown = sorted(items.filter(function(i){return matches(i)}));
     var active = Object.keys(filter).filter(function(k){ return filter[k] !== "all"; }).length + (sortBy !== "default" ? 1 : 0);
-    $("f-clear").disabled = !active;
     $("f-view").textContent = "View " + shown.length + (shown.length === 1 ? " Item" : " Items");
     $("f-open").textContent = "Filters" + (active ? " (" + active + ")" : "");
     grid.textContent = "";
@@ -653,9 +657,11 @@ body{display:flex;flex-direction:column;min-height:100vh}
         link.href = u; link.target = "_blank"; link.rel = "noopener noreferrer";
         body.appendChild(link);
       }
-      if(i.note) body.appendChild(el("p","meta",i.note));
+      var isWas = /^Was\b/.test(i.note||"");
+      if(i.note && !isWas) body.appendChild(el("p","meta",i.note));
       var foot = el("div","foot");
       foot.appendChild(el("span","price",fmtPrice(i)));
+      if(isWas) foot.appendChild(el("span","was",i.note));
       body.appendChild(foot);
       card.appendChild(body);
       grid.appendChild(card);
@@ -1127,10 +1133,6 @@ body{display:flex;flex-direction:column;min-height:100vh}
   $("f-open").addEventListener("click", function(){ panel(true); });
   $("f-close").addEventListener("click", function(){ panel(false); });
   $("f-view").addEventListener("click", function(){ panel(false); });
-  $("f-clear").addEventListener("click", function(){
-    Object.keys(filter).forEach(function(k){ filter[k] = "all"; });
-    sortBy = "default"; render();
-  });
   document.addEventListener("keydown", function(ev){
     if(ev.key === "Escape" && document.body.classList.contains("filters-open")) panel(false);
   });
