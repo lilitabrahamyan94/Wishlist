@@ -524,8 +524,43 @@ body{display:flex;flex-direction:column;min-height:100vh}
       <span>Continue with Google</span>
     </button>
     <p class="login-msg" id="login-msg" role="status"></p>
-    <p class="login-fine">By continuing you agree to our <a href="#terms">Terms &amp; Conditions</a>.</p>
+    <p class="login-fine">By continuing you agree to our <a href="#terms">Terms &amp; Conditions</a> and <a href="#privacy">Privacy Policy</a>.</p>
   </div>
+</div>
+<div class="wrap legal" id="view-privacy" hidden>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: 10 October 2026</p>
+  <p class="draft">Draft for review. Items in [brackets] still need your details, and a lawyer should check this text before launch.</p>
+  <p>This policy explains what information wishlist.co handles when you use the site, why, and the choices you have.</p>
+  <h2>1. Who we are</h2>
+  <p>wishlist.co is run by [company name], [address]. We are responsible for the personal information described here. To reach us about privacy, write to [contact email].</p>
+  <h2>2. The short version</h2>
+  <p>You can use wishlist.co today without an account. Your wishlist is kept in your own browser, not on our servers. We do not use advertising trackers or analytics cookies, and we do not sell personal information.</p>
+  <h2>3. What we collect and why</h2>
+  <p><strong>Your wishlist.</strong> The product links you add, and the ones you remove, are saved in your browser’s local storage on your device. We cannot see them.</p>
+  <p><strong>Product links you paste.</strong> When you add a link, your browser sends that link to our lookup service so it can read the product’s name, photos, price and stock from the shop. We use the link only to answer that request and do not keep a record of it tied to you.</p>
+  <p><strong>Technical information.</strong> Like any website, the companies that host wishlist.co receive your IP address, browser type and the time of each request, so they can deliver pages and keep the service secure.</p>
+  <p><strong>Messages.</strong> The Get in Touch form is not connected yet, so nothing you type there is sent or stored. When it is, we will use your name and message only to reply to you.</p>
+  <p><strong>Account details, once sign-in is available.</strong> If you sign in with Google, we will receive your name, email address and profile picture from Google, and we will store your wishlist with your account so it follows you across devices. We will not receive your Google password.</p>
+  <h2>4. Cookies and similar storage</h2>
+  <p>We do not set cookies. We use your browser’s local storage to remember your wishlist on your device. You can clear it at any time in your browser settings; doing so removes your saved list.</p>
+  <h2>5. Who else receives information</h2>
+  <p><strong>Hosting providers.</strong> GitHub hosts the website and Cloudflare runs the lookup service. Both process technical information on our behalf.</p>
+  <p><strong>Google Fonts.</strong> The site loads its typefaces from Google, which receives your IP address when your browser requests them.</p>
+  <p><strong>Shops.</strong> Product photos load directly from the shops’ own servers, so a shop can see that your device requested an image. When you follow “Open at” or a coupon link, you leave wishlist.co and the shop’s own privacy policy applies.</p>
+  <p>We do not sell your personal information or share it for advertising.</p>
+  <h2>6. Ads and sponsored content</h2>
+  <p>Cards marked “Ad” or “Sponsored” are shown to everyone in the same way. They are not chosen using your personal information, and they do not track you on wishlist.co. If you follow one, the advertiser’s site may use its own cookies.</p>
+  <h2>7. How long we keep information</h2>
+  <p>Your wishlist stays in your browser until you remove items or clear your browser storage. Hosting logs are kept by our providers for limited periods under their own policies. Once accounts exist, we will keep account information until you delete your account.</p>
+  <h2>8. Your rights</h2>
+  <p>Depending on where you live, you may have the right to ask for a copy of your personal information, to have it corrected or deleted, to object to or restrict how it is used, and to complain to your local data protection authority. Write to [contact email] and we will respond within the time the law requires.</p>
+  <h2>9. Children</h2>
+  <p>wishlist.co is not intended for children under 16, and we do not knowingly collect their personal information.</p>
+  <h2>10. Where information is processed</h2>
+  <p>Our providers may process information in countries other than yours, including the United States. Where the law requires it, we rely on appropriate safeguards for those transfers.</p>
+  <h2>11. Changes to this policy</h2>
+  <p>We will post any changes here with a new date. If a change is significant, we will tell you before it takes effect.</p>
 </div>
 <div class="wrap legal" id="view-faq" hidden>
   <h1>FAQs</h1>
@@ -587,12 +622,8 @@ body{display:flex;flex-direction:column;min-height:100vh}
       <li><a href="#home">Promotions</a></li>
       <li><a href="#faq">FAQs</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#" data-soon>Help</a></li>
       <li><a href="#contact">Get in Touch</a></li>
-      <li><a href="#" data-soon>Partners</a></li>
-      <li><a href="#" data-soon>Statement Privacy Policy</a></li>
-      <li><a href="#" data-soon>Interest-Based Ads</a></li>
-      <li><a href="#" data-soon>Do Not Sell or Share My Personal Information</a></li>
+      <li><a href="#privacy">Statement Privacy Policy</a></li>
       <li><a href="#terms">Terms &amp; Conditions</a></li>
     </ul>
   </nav>
@@ -1205,7 +1236,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     }).then(function(){ saving = false; $("add-btn").disabled = false; });
   });
 
-  var VIEWS = ["home","wishlist","coupons","profile","about","terms","login","faq","contact"];
+  var VIEWS = ["home","wishlist","coupons","profile","about","terms","login","faq","contact","privacy"];
   function show(){
     var v = (location.hash || "").slice(1);
     if(VIEWS.indexOf(v) < 0) v = "home";
