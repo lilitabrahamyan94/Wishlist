@@ -17,7 +17,7 @@ from the repository root.
 
 Put the Worker's `workers.dev` address in `index.html`:
 
-    var API_URL = "https://wishlist.<your-name>.workers.dev";
+    var API_URL = "https://wishlist.lil-abr94.workers.dev";
 
 While `API_URL` is empty the page works as before and adds links without details.
 

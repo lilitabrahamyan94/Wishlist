@@ -548,7 +548,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
 
   var store = null, saving = false, local = false;
   // Address of the product-lookup backend (see backend/). Leave empty to add links without details.
-  var API_URL = "";
+  var API_URL = "https://wishlist.lil-abr94.workers.dev";
   function lookup(url){
     var ctl = typeof AbortController === "function" ? new AbortController() : null;
     var t = setTimeout(function(){ if(ctl) ctl.abort(); }, 20000);
