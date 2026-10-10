@@ -547,6 +547,16 @@ body{display:flex;flex-direction:column;min-height:100vh}
   }
 
   var store = null, saving = false, local = false;
+  // Address of the product-lookup backend (see backend/). Leave empty to add links without details.
+  var API_URL = "";
+  function lookup(url){
+    var ctl = typeof AbortController === "function" ? new AbortController() : null;
+    var t = setTimeout(function(){ if(ctl) ctl.abort(); }, 20000);
+    return fetch(API_URL.replace(/\/+$/,"") + "/product?url=" + encodeURIComponent(url), ctl ? {signal: ctl.signal} : {})
+      .then(function(r){ return r.json(); })
+      .catch(function(){ return null; })
+      .then(function(d){ clearTimeout(t); return d; });
+  }
   var SEED = [
     {
       "id": "ck-47H334G-P7A",
@@ -767,11 +777,32 @@ body{display:flex;flex-direction:column;min-height:100vh}
     }
     var shop = shopOf(x.hostname), now = new Date().toISOString();
     if(local){
-      var mine = readLocal();
-      mine.push({id:"local-" + Date.now(), url:x.href, shop:shop, name:nameOf(x, shop),
-        availability:"unknown", note:"Saved in this browser only", addedAt:now});
-      writeLocal(mine); input.value = ""; goLocal();
-      say("Added. It is saved in this browser only."); return;
+      var basic = {id:"local-" + Date.now(), url:x.href, shop:shop, name:nameOf(x, shop),
+        availability:"unknown", note:"Saved in this browser only", addedAt:now};
+      var keep = function(item, msg, err){
+        var mine = readLocal();
+        mine.push(item); writeLocal(mine); input.value = ""; goLocal();
+        say(msg, err);
+      };
+      if(!API_URL){ keep(basic, "Added. It is saved in this browser only."); return; }
+      saving = true; $("add-btn").disabled = true; say("Looking up the product\u2026");
+      lookup(x.href).then(function(d){
+        if(d && d.ok && d.product){
+          var pr = d.product, item = {id:basic.id, url:x.href, addedAt:now, note:basic.note,
+            shop: pr.shop || shop, name: pr.name || basic.name,
+            availability: STATUS[pr.availability] ? pr.availability : "unknown"};
+          ["category","color","currency","checkedAt"].forEach(function(k){ if(typeof pr[k] === "string") item[k] = pr[k]; });
+          if(typeof pr.price === "number") item.price = pr.price;
+          if(Array.isArray(pr.images)) item.images = pr.images.slice(0, 8);
+          keep(item, "Added with details from " + item.shop + ". It is saved in this browser only.");
+        } else {
+          var why = d && d.error;
+          keep(basic, why === "blocked" ? "Added, but this shop doesn't allow automatic lookups, so there are no photos or price."
+            : why === "no_product" ? "Added, but no product details were found at that link."
+            : "Added without details. The lookup didn't work this time.");
+        }
+      }).then(function(){ saving = false; $("add-btn").disabled = false; });
+      return;
     }
     saving = true; $("add-btn").disabled = true; say("Adding…");
     store.collection("items").add({
