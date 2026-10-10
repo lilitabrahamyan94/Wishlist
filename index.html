@@ -288,6 +288,42 @@ body{display:flex;flex-direction:column;min-height:100vh}
 .card:not(.ad) .gallery,.card:not(.ad) .plate{border-radius:10px}
 .card:not(.ad) .body{padding:12px 2px 14px}
 .foot .was{color:var(--muted);font-size:13px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-height:calc(100vh - 66px)}
+.split[hidden],.login[hidden]{display:none}
+.split-copy{display:flex;flex-direction:column;justify-content:center;justify-self:end;width:100%;max-width:700px;
+  padding:64px clamp(24px,6vw,96px)}
+.eyebrow{margin:0 0 18px;color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.split-copy h1{margin:0 0 28px;font-family:"Outfit","Schibsted Grotesk",sans-serif;font-weight:300;
+  font-size:clamp(36px,4vw,60px);line-height:1.05;letter-spacing:-0.03em}
+.split-copy p{margin:0 0 18px;font-size:16px;line-height:1.65}
+.split-copy p.eyebrow{margin-bottom:18px;font-size:13px;line-height:1.4}
+.textlink{color:var(--ink);font-weight:700;text-underline-offset:4px}
+.textlink:hover{color:var(--accent)}
+.split-pic{position:relative;min-height:440px;background:var(--plate)}
+.split-pic img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.legal{max-width:780px}
+.legal h1{margin-bottom:8px}
+.legal h2{margin:34px 0 8px;font-size:18px;line-height:1.3}
+.legal p{margin:0 0 14px;line-height:1.65}
+.legal .updated{color:var(--muted);font-size:14px}
+.legal .draft{padding:12px 14px;border-radius:8px;background:var(--low-bg);color:var(--low);font-size:14px}
+.login{display:grid;place-items:center;flex:1;width:100%;padding:56px 16px}
+.login-card{width:100%;max-width:400px;padding:40px 28px 28px;border:1px solid var(--line);border-radius:14px;
+  background:var(--surface);text-align:center}
+.login-card h1{margin:16px 0 8px;font-family:"Outfit","Schibsted Grotesk",sans-serif;font-weight:300;font-size:32px;
+  line-height:1.1;letter-spacing:-0.02em}
+.login-sub{margin:0 0 28px;color:var(--muted)}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:48px;padding:0 18px;
+  border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.gbtn:hover{border-color:var(--ink)}
+.login-msg{min-height:20px;margin:12px 0 0;color:var(--muted);font-size:13px}
+.login-fine{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.login-fine a{color:var(--ink);text-underline-offset:3px}
+@media (max-width:760px){
+  .split{grid-template-columns:minmax(0,1fr);min-height:0}
+  .split-copy{max-width:none;padding:40px 20px}
+  .split-pic{min-height:0;aspect-ratio:4/5}
+}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (max-width:760px){
   .wrap{padding:20px 16px 48px}
@@ -318,6 +354,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
       <span>Profile</span>
     </button>
     <div class="pop" id="profile-menu" hidden>
+      <a href="#login">Sign In</a>
       <a href="#profile">My Profile Page</a>
       <button type="button" id="sign-out">Sign Out</button>
     </div>
@@ -406,6 +443,68 @@ body{display:flex;flex-direction:column;min-height:100vh}
   <header><h1>Profile</h1></header>
   <div class="empty"><strong>Nothing here yet</strong>Profile details will go on this page.</div>
 </div>
+<div class="split" id="view-about" hidden>
+  <div class="split-copy">
+    <p class="eyebrow">About us</p>
+    <h1>Everything you want, in one place.</h1>
+    <p>wishlist.co is for people who love shopping online and shop in more than one store. Save a product from any shop with its link, and it joins a single list you can come back to.</p>
+    <p>For every saved piece we keep the photo, the price and whether it is in stock, so you can compare what you love side by side and buy when the moment is right, not when a sale banner tells you to.</p>
+    <p>We also gather promotions and coupon codes from the brands you follow, and we label advertising clearly. Your list is yours: it exists to help you choose well, not to push you to buy more.</p>
+    <p><a class="textlink" href="#wishlist">Go to your wishlist</a></p>
+  </div>
+  <div class="split-pic">
+    <img src="assets/about.jpg" alt="Generated image: a woman in a camel coat, cream knit and ivory trousers standing by a window">
+  </div>
+</div>
+<div class="wrap legal" id="view-terms" hidden>
+  <h1>Terms &amp; Conditions</h1>
+  <p class="updated">Last updated: 10 October 2026</p>
+  <p class="draft">Draft for review. Items in [brackets] still need your details, and a lawyer should check this text before launch.</p>
+  <p>These terms are an agreement between you and [company name] (“wishlist.co”, “we”, “us”). By using wishlist.co you agree to them. If you do not agree, please do not use the service.</p>
+  <h2>1. What wishlist.co does</h2>
+  <p>wishlist.co lets you save products from different online shops in one list, see their price and availability, and find coupons and promotions. We show information about products sold by other companies. We do not sell those products and are not a party to any purchase you make from a shop.</p>
+  <h2>2. Using the service</h2>
+  <p>You may use wishlist.co for personal, non-commercial purposes. You must be at least 16 years old, or the age of digital consent where you live. The service is currently free. If we introduce paid features, we will tell you before any charge applies.</p>
+  <h2>3. Accounts</h2>
+  <p>Some features need an account, which you can create by signing in with Google. You are responsible for activity on your account and for keeping access to it secure. Tell us promptly if you think someone else has used it.</p>
+  <h2>4. Closing your account</h2>
+  <p>You can stop using wishlist.co and ask us to delete your account at any time. We may suspend or close an account that breaks these terms, harms other people, or puts the service at risk.</p>
+  <h2>5. Prices, availability and coupons</h2>
+  <p>Prices, stock status, product details and coupon codes come from the shops themselves or from public pages, and they change often. We try to keep them current but cannot guarantee that they are accurate, complete or still valid. Always confirm the final price and terms on the shop’s own site before you buy.</p>
+  <h2>6. Promotions and sponsored content</h2>
+  <p>Some banners, coupons and cards are advertising. They are labelled “Ad” or “Sponsored”. We may earn a commission when you follow a link to a shop and make a purchase. This does not change the price you pay.</p>
+  <h2>7. Content</h2>
+  <p>Product names, photos and descriptions belong to their owners and are shown to identify the products you saved. Links you add to your list remain yours. You give us permission to store and display them so the service can work.</p>
+  <h2>8. What you may not do</h2>
+  <p>Do not use wishlist.co to break the law, copy or scrape the service in bulk, interfere with how it runs, try to access another person’s account, or upload anything harmful or misleading.</p>
+  <h2>9. Intellectual property</h2>
+  <p>The wishlist.co name, logo, design and software belong to us. These terms do not give you any rights in them beyond using the service as intended. If you send us ideas or feedback, we may use them without owing you anything.</p>
+  <h2>10. No warranty</h2>
+  <p>The service is provided “as is” and “as available”. To the extent the law allows, we make no promises that it will be uninterrupted, error-free or fit for a particular purpose.</p>
+  <h2>11. Limits on our liability</h2>
+  <p>To the extent the law allows, we are not liable for indirect or consequential losses, or for losses arising from a purchase you make from a shop, a price or coupon that turned out to be wrong, or a product that sold out. Nothing in these terms limits liability that cannot be limited by law.</p>
+  <h2>12. Third-party sites</h2>
+  <p>Links take you to shops and other sites we do not control. Their own terms and privacy policies apply there, and you use them at your own risk.</p>
+  <h2>13. Messages from us</h2>
+  <p>If you turn on alerts, we will send you messages about price drops and stock changes for products on your list. You can turn them off at any time. We may also send essential messages about your account or changes to these terms.</p>
+  <h2>14. Changes and general terms</h2>
+  <p>We may update these terms and will post the new version here with a new date. If a change is significant, we will tell you in advance. These terms are governed by the laws of [country or state], and disputes will be handled by the courts of [location]. If one part of these terms cannot be enforced, the rest still applies.</p>
+  <h2>15. Contact</h2>
+  <p>Questions about these terms: [contact email].</p>
+</div>
+<div class="login" id="view-login" hidden>
+  <div class="login-card">
+    <svg class="login-heart" width="30" height="28" viewBox="3.5 4.5 15 14" aria-hidden="true"><defs><clipPath id="heart-clip-login"><path d="M11 18.500S3.500 14 3.500 8.600A4 4 0 0 1 11 6.700a4 4 0 0 1 7.500 1.900C18.500 14 11 18.500 11 18.500z"/></clipPath></defs><g clip-path="url(#heart-clip-login)"><rect x="3" y="4.40" width="16" height="2.42" fill="#E40303"/><rect x="3" y="6.77" width="16" height="2.42" fill="#FF8C00"/><rect x="3" y="9.13" width="16" height="2.42" fill="#FFED00"/><rect x="3" y="11.50" width="16" height="2.42" fill="#008026"/><rect x="3" y="13.87" width="16" height="2.42" fill="#004DFF"/><rect x="3" y="16.23" width="16" height="2.42" fill="#750787"/></g></svg>
+    <h1>Sign in to wishlist.co</h1>
+    <p class="login-sub">Keep your wishlist on every device.</p>
+    <button type="button" class="gbtn" id="g-btn">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.140 4.140 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.430 0 4.467-.806 5.956-2.180l-2.908-2.259c-.806.540-1.837.860-3.048.860-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.710A5.410 5.410 0 0 1 3.682 9c0-.593.102-1.170.282-1.710V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.580c1.321 0 2.508.454 3.440 1.345l2.582-2.580C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.290C4.672 5.163 6.656 3.580 9 3.580z"/></svg>
+      <span>Continue with Google</span>
+    </button>
+    <p class="login-msg" id="login-msg" role="status"></p>
+    <p class="login-fine">By continuing you agree to our <a href="#terms">Terms &amp; Conditions</a>.</p>
+  </div>
+</div>
 <footer class="foot-bar">
   <a href="#home" class="flogo" aria-label="wishlist.co, home">
     <svg width="11" height="10" viewBox="3.5 4.5 15 14" aria-hidden="true"><path d="M11 18.500S3.500 14 3.500 8.600A4 4 0 0 1 11 6.700a4 4 0 0 1 7.500 1.900C18.500 14 11 18.500 11 18.500z" fill="currentColor"/></svg>
@@ -415,14 +514,14 @@ body{display:flex;flex-direction:column;min-height:100vh}
     <ul>
       <li><a href="#home">Promotions</a></li>
       <li><a href="#" data-soon>FAQs</a></li>
-      <li><a href="#" data-soon>About</a></li>
+      <li><a href="#about">About</a></li>
       <li><a href="#" data-soon>Help</a></li>
       <li><a href="#" data-soon>Get in Touch</a></li>
       <li><a href="#" data-soon>Partners</a></li>
       <li><a href="#" data-soon>Statement Privacy Policy</a></li>
       <li><a href="#" data-soon>Interest-Based Ads</a></li>
       <li><a href="#" data-soon>Do Not Sell or Share My Personal Information</a></li>
-      <li><a href="#" data-soon>Terms &amp; Conditions</a></li>
+      <li><a href="#terms">Terms &amp; Conditions</a></li>
     </ul>
   </nav>
   <p class="rights">© 2026 wishlist.co. All rights reserved.</p>
@@ -1034,15 +1133,18 @@ body{display:flex;flex-direction:column;min-height:100vh}
     }).then(function(){ saving = false; $("add-btn").disabled = false; });
   });
 
-  var VIEWS = ["home","wishlist","coupons","profile"];
+  var VIEWS = ["home","wishlist","coupons","profile","about","terms","login"];
   function show(){
     var v = (location.hash || "").slice(1);
     if(VIEWS.indexOf(v) < 0) v = "home";
     VIEWS.forEach(function(n){
       $("view-" + n).hidden = n !== v;
-      if(n === v) $("nav-" + n).setAttribute("aria-current","page");
-      else $("nav-" + n).removeAttribute("aria-current");
+      var nav = $("nav-" + n);
+      if(!nav) return;
+      if(n === v) nav.setAttribute("aria-current","page");
+      else nav.removeAttribute("aria-current");
     });
+    window.scrollTo(0, 0);
   }
   Array.prototype.forEach.call(document.querySelectorAll("a[data-soon]"), function(a){
     a.addEventListener("click", function(ev){ ev.preventDefault(); });
@@ -1135,6 +1237,9 @@ body{display:flex;flex-direction:column;min-height:100vh}
   $("f-view").addEventListener("click", function(){ panel(false); });
   document.addEventListener("keydown", function(ev){
     if(ev.key === "Escape" && document.body.classList.contains("filters-open")) panel(false);
+  });
+  $("g-btn").addEventListener("click", function(){
+    $("login-msg").textContent = "Google sign-in isn\u2019t connected yet.";
   });
   window.addEventListener("hashchange", show);
   show();
