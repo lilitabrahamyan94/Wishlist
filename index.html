@@ -40,7 +40,7 @@ h1{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-0.02em;margin:
 .summary{color:var(--muted);margin:0}
 .summary b{color:var(--in);font-weight:600}
 .layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
-aside{position:sticky;top:calc(81px + env(safe-area-inset-top,0px))}
+aside{position:sticky;top:calc(81px + env(safe-area-inset-top,0px));max-height:calc(100vh - 97px);overflow-y:auto}
 fieldset{border:0;padding:0;margin:0 0 28px;min-width:0}
 legend{font-weight:600;font-size:13px;color:var(--muted);padding:0;margin-bottom:8px}
 .opts{display:flex;flex-direction:column;gap:2px}
@@ -240,6 +240,48 @@ body{display:flex;flex-direction:column;min-height:100vh}
 .card.ad .adcta:hover{opacity:.8}
 .card.ad :focus-visible{outline-color:#FFFFFF}
 @media (max-width:760px){.card.ad{min-height:240px;padding:14px}}
+.fhead,.fopen,#f-view{display:none}
+.fgroup{padding:4px 0 12px;border-bottom:1px solid var(--line)}
+.fgroup.closed{padding-bottom:4px}
+.fgroup h3{margin:0;font-size:inherit}
+.ftoggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0;border:0;
+  background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+.ftoggle svg{flex:none;color:var(--muted);transition:transform .15s}
+.fgroup.closed .ftoggle svg{transform:rotate(180deg)}
+.fopts{display:flex;flex-direction:column}
+.fopts[hidden]{display:none}
+.radio{display:flex;align-items:center;gap:12px;min-height:40px;color:var(--muted);cursor:pointer}
+.radio input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-items:center;width:20px;height:20px;margin:0;
+  border:1.5px solid var(--muted);border-radius:50%;background:var(--surface);cursor:pointer}
+.radio input::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .12s}
+.radio input:checked{border-color:var(--ink)}
+.radio input:checked::before{transform:scale(1)}
+.radio input:checked + .rtext{color:var(--ink);font-weight:500}
+.radio:hover .rtext{color:var(--ink)}
+.radio .n{color:var(--muted);font-weight:400}
+.radio.none{opacity:.5}
+.ffoot{display:flex;gap:10px;padding:18px 0 4px}
+.pill{flex:1;min-height:48px;padding:0 18px;border-radius:99px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
+.pill.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.pill.ghost:hover{border-color:var(--ink)}
+.pill.ghost:disabled{opacity:.45;border-color:var(--line);cursor:default}
+.pill.solid{background:var(--ink);border:1px solid var(--ink);color:var(--paper)}
+@media (prefers-reduced-motion:reduce){.ftoggle svg,.radio input::before{transition:none}}
+@media (max-width:760px){
+  .fopen{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;margin-bottom:14px;border:1px solid var(--line);
+    border-radius:99px;background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+  aside#filters{display:none}
+  body.filters-open{overflow:hidden}
+  body.filters-open aside#filters{display:flex;flex-direction:column;position:fixed;inset:0;z-index:40;max-height:none;
+    overflow:visible;background:var(--paper);padding-top:env(safe-area-inset-top,0px)}
+  .fhead{display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 20px;border-bottom:1px solid var(--line)}
+  .fhead h2{margin:0;font-size:18px}
+  #f-close{display:grid;place-items:center;width:44px;height:44px;border:0;background:none;color:var(--ink);cursor:pointer}
+  .fbody{flex:1;overflow-y:auto;padding:0 20px}
+  .radio{min-height:48px}
+  .ffoot{padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+  #f-view{display:block}
+}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (max-width:760px){
   .wrap{padding:20px 16px 48px}
@@ -338,12 +380,21 @@ body{display:flex;flex-direction:column;min-height:100vh}
     <p class="summary" id="summary">Loading your list…</p>
   </div>
   <div class="layout">
-    <aside aria-label="Filters">
-      <fieldset><legend>Category</legend><div class="opts" id="f-category"></div></fieldset>
-      <fieldset><legend>Availability</legend><div class="opts" id="f-status"></div></fieldset>
-      <fieldset id="shop-set" hidden><legend>Shop</legend><div class="opts" id="f-shop"></div></fieldset>
+    <aside id="filters" aria-label="Filters">
+      <div class="fhead">
+        <h2>Filters</h2>
+        <button type="button" id="f-close" aria-label="Close filters"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.500 3.500l9 9M12.500 3.500l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" fill="none"/></svg></button>
+      </div>
+      <div class="fbody" id="f-groups"></div>
+      <div class="ffoot">
+        <button type="button" class="pill ghost" id="f-clear">Clear All</button>
+        <button type="button" class="pill solid" id="f-view">View Items</button>
+      </div>
     </aside>
-    <main><div class="grid" id="grid"></div></main>
+    <main>
+      <button type="button" class="fopen" id="f-open" aria-haspopup="dialog">Filters</button>
+      <div class="grid" id="grid"></div>
+    </main>
   </div>
 </div>
 <div class="wrap" id="view-profile" hidden>
@@ -380,7 +431,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     unknown:{label:"Not checked",cls:"b-unk"}
   };
   var items = [], loaded = false, failed = false;
-  var filter = {category:"all", status:"all", shop:"all"};
+  var filter = {category:"all", status:"all", shop:"all", price:"all"};
   var $ = function(id){return document.getElementById(id)};
 
   function el(tag, cls, text){
@@ -464,22 +515,60 @@ body{display:flex;flex-direction:column;min-height:100vh}
     card.appendChild(link);
     return card;
   }
+  var sortBy = "default", closed = {}, refocus = null;
+  var SORTS = [["default","Available first"],["price-asc","Price: low to high"],["price-desc","Price: high to low"],["new","Newest added"]];
+  var PRICES = [["u50","Under $50"],["50-100","$50 to $100"],["o100","Over $100"]];
+  var CHEVRON = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2.500 9l4.500-4.500L11.500 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function bucket(i){
+    var p = i.price;
+    return typeof p !== "number" ? "none" : p < 50 ? "u50" : p <= 100 ? "50-100" : "o100";
+  }
   function matches(i, skip){
     return (skip==="category" || filter.category==="all" || (i.category||"Other")===filter.category)
         && (skip==="status" || filter.status==="all" || st(i)===filter.status)
-        && (skip==="shop" || filter.shop==="all" || (i.shop||"Unknown shop")===filter.shop);
+        && (skip==="shop" || filter.shop==="all" || (i.shop||"Unknown shop")===filter.shop)
+        && (skip==="price" || filter.price==="all" || bucket(i)===filter.price);
   }
-  function options(host, key, list){
-    host.textContent = "";
+  function sorted(list){
+    var out = list.slice(), by = function(i){ return typeof i.price === "number" ? i.price : null; };
+    if(sortBy === "price-asc" || sortBy === "price-desc"){
+      var dir = sortBy === "price-asc" ? 1 : -1;
+      out.sort(function(a,b){
+        var x = by(a), y = by(b);
+        return x === null ? (y === null ? 0 : 1) : y === null ? -1 : (x - y) * dir;
+      });
+    } else if(sortBy === "new"){
+      out.sort(function(a,b){ return String(b.addedAt||b.checkedAt||"").localeCompare(String(a.addedAt||a.checkedAt||"")); });
+    }
+    return out;
+  }
+  // One collapsible group of radio buttons.
+  function group(host, key, label, list, current, onPick){
+    var sec = el("section","fgroup" + (closed[key] ? " closed" : ""));
+    var h = el("h3"), tg = el("button","ftoggle");
+    tg.type = "button"; tg.id = "fg-" + key;
+    tg.setAttribute("aria-expanded", String(!closed[key]));
+    tg.appendChild(el("span",null,label));
+    tg.insertAdjacentHTML("beforeend", CHEVRON);
+    tg.addEventListener("click", function(){ closed[key] = !closed[key]; refocus = "#fg-" + key; render(); });
+    h.appendChild(tg); sec.appendChild(h);
+    var box = el("div","fopts");
+    box.setAttribute("role","radiogroup"); box.setAttribute("aria-labelledby","fg-" + key);
+    box.hidden = !!closed[key];
     list.forEach(function(o){
-      var b = el("button","opt");
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(filter[key]===o.value));
-      b.appendChild(el("span",null,o.label));
-      b.appendChild(el("span","n",String(o.count)));
-      b.addEventListener("click", function(){filter[key]=o.value; render()});
-      host.appendChild(b);
+      var lb = el("label","radio" + (o.count === 0 && current !== o.value ? " none" : ""));
+      var inp = document.createElement("input");
+      inp.type = "radio"; inp.name = "f-" + key; inp.value = o.value; inp.checked = current === o.value;
+      inp.addEventListener("change", function(){
+        refocus = 'input[name="f-' + key + '"][value="' + o.value + '"]';
+        onPick(o.value);
+      });
+      lb.appendChild(inp);
+      var t = el("span","rtext",o.label);
+      if(o.count != null) t.appendChild(el("span","n"," (" + o.count + ")"));
+      lb.appendChild(t); box.appendChild(lb);
     });
+    sec.appendChild(box); host.appendChild(sec);
   }
   function tally(key, getter){
     var pool = items.filter(function(i){return matches(i,key)}), map = {};
@@ -487,21 +576,31 @@ body{display:flex;flex-direction:column;min-height:100vh}
     return {total:pool.length, map:map};
   }
   function render(){
+    var host = $("f-groups"), pick = function(key){ return function(v){ filter[key] = v; render(); }; };
+    host.textContent = "";
+    group(host, "sort", "Sort by", SORTS.map(function(o){ return {value:o[0], label:o[1]}; }), sortBy,
+      function(v){ sortBy = v; render(); });
+
     var c = tally("category", function(i){return i.category||"Other"});
-    options($("f-category"),"category",[{value:"all",label:"All items",count:c.total}].concat(
-      Object.keys(c.map).sort().map(function(k){return {value:k,label:k,count:c.map[k]}})));
+    group(host, "category", "Category", [{value:"all",label:"All items",count:c.total}].concat(
+      Object.keys(c.map).sort().map(function(k){return {value:k,label:k,count:c.map[k]}})), filter.category, pick("category"));
 
     var s = tally("status", st);
-    options($("f-status"),"status",[{value:"all",label:"Any",count:s.total}].concat(
+    group(host, "status", "Availability", [{value:"all",label:"Any",count:s.total}].concat(
       Object.keys(STATUS).filter(function(k){return s.map[k] || filter.status===k})
-        .map(function(k){return {value:k,label:STATUS[k].label,count:s.map[k]||0}})));
+        .map(function(k){return {value:k,label:STATUS[k].label,count:s.map[k]||0}})), filter.status, pick("status"));
 
     var allShops = {};
     items.forEach(function(i){allShops[i.shop||"Unknown shop"]=1});
     var h = tally("shop", function(i){return i.shop||"Unknown shop"});
-    $("shop-set").hidden = Object.keys(allShops).length < 2;
-    options($("f-shop"),"shop",[{value:"all",label:"All shops",count:h.total}].concat(
-      Object.keys(allShops).sort().map(function(k){return {value:k,label:k,count:h.map[k]||0}})));
+    if(Object.keys(allShops).length > 1) group(host, "shop", "Shop", [{value:"all",label:"All shops",count:h.total}].concat(
+      Object.keys(allShops).sort().map(function(k){return {value:k,label:k,count:h.map[k]||0}})), filter.shop, pick("shop"));
+
+    var pr = tally("price", bucket);
+    group(host, "price", "Price", [{value:"all",label:"Any price",count:pr.total}].concat(
+      PRICES.map(function(o){return {value:o[0],label:o[1],count:pr.map[o[0]]||0}})), filter.price, pick("price"));
+
+    if(refocus){ var f = host.querySelector(refocus); if(f) f.focus(); refocus = null; }
 
     var inStock = items.filter(function(i){var a=st(i);return a==="in_stock"||a==="low_stock"}).length;
     var sum = $("summary");
@@ -513,7 +612,11 @@ body{display:flex;flex-direction:column;min-height:100vh}
       sum.appendChild(document.createTextNode(" of " + items.length + (items.length===1?" item":" items")));
     }
 
-    var grid = $("grid"), shown = items.filter(function(i){return matches(i)});
+    var grid = $("grid"), shown = sorted(items.filter(function(i){return matches(i)}));
+    var active = Object.keys(filter).filter(function(k){ return filter[k] !== "all"; }).length + (sortBy !== "default" ? 1 : 0);
+    $("f-clear").disabled = !active;
+    $("f-view").textContent = "View " + shown.length + (shown.length === 1 ? " Item" : " Items");
+    $("f-open").textContent = "Filters" + (active ? " (" + active + ")" : "");
     grid.textContent = "";
     if(loaded && !items.length){
       var e = el("div","empty");
@@ -524,7 +627,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     if(loaded && !shown.length){
       var e2 = el("div","empty");
       e2.appendChild(el("strong",null,"No items match these filters"));
-      e2.appendChild(document.createTextNode("Pick a different category, availability or shop."));
+      e2.appendChild(document.createTextNode("Change a filter, or clear them all."));
       grid.appendChild(e2); return;
     }
     shown.forEach(function(i, n){
@@ -1016,6 +1119,20 @@ body{display:flex;flex-direction:column;min-height:100vh}
   document.addEventListener("click", function(ev){ if(!pop.hidden && !pop.contains(ev.target)) setMenu(false); });
   document.addEventListener("keydown", function(ev){
     if(ev.key === "Escape" && !pop.hidden){ setMenu(false); pbtn.focus(); }
+  });
+  var panel = function(open){
+    document.body.classList.toggle("filters-open", open);
+    if(open) $("f-close").focus(); else if(document.activeElement && $("filters").contains(document.activeElement)) $("f-open").focus();
+  };
+  $("f-open").addEventListener("click", function(){ panel(true); });
+  $("f-close").addEventListener("click", function(){ panel(false); });
+  $("f-view").addEventListener("click", function(){ panel(false); });
+  $("f-clear").addEventListener("click", function(){
+    Object.keys(filter).forEach(function(k){ filter[k] = "all"; });
+    sortBy = "default"; render();
+  });
+  document.addEventListener("keydown", function(ev){
+    if(ev.key === "Escape" && document.body.classList.contains("filters-open")) panel(false);
   });
   window.addEventListener("hashchange", show);
   show();
