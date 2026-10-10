@@ -324,6 +324,28 @@ body{display:flex;flex-direction:column;min-height:100vh}
   .split-copy{max-width:none;padding:40px 20px}
   .split-pic{min-height:0;aspect-ratio:4/5}
 }
+.legal .more{margin-top:28px}
+.qa{border-bottom:1px solid var(--line)}
+.qa summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:8px 0;
+  font-weight:600;font-size:16px;line-height:1.35;cursor:pointer;list-style:none}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"";flex:none;width:8px;height:8px;margin:0 6px 4px;border-right:1.5px solid var(--muted);
+  border-bottom:1.5px solid var(--muted);transform:rotate(45deg);transition:transform .15s}
+.qa[open] summary::after{transform:rotate(-135deg);margin-bottom:-4px}
+.qa p{margin:0 0 20px;max-width:66ch}
+.form{display:flex;flex-direction:column;gap:18px;max-width:560px;margin-top:24px}
+.field label{display:block;margin-bottom:6px;font-weight:600;font-size:14px}
+.field input,.field textarea{display:block;width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);
+  border-radius:10px;background:var(--surface);color:var(--ink);font:inherit}
+.field textarea{min-height:160px;resize:vertical;line-height:1.5}
+.field [aria-invalid="true"]{border-color:var(--out)}
+.field .err{margin:6px 0 0;color:var(--out);font-size:13px}
+.field .err:empty{display:none}
+.btn-primary{align-self:flex-start;min-height:48px;padding:0 28px;border:0;border-radius:99px;background:var(--ink);
+  color:var(--paper);font:inherit;font-weight:600;cursor:pointer}
+.form-msg{margin:0;color:var(--muted);font-size:14px}
+.form-msg:empty{display:none}
+@media (prefers-reduced-motion:reduce){.qa summary::after{transition:none}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (max-width:760px){
   .wrap{padding:20px 16px 48px}
@@ -505,6 +527,56 @@ body{display:flex;flex-direction:column;min-height:100vh}
     <p class="login-fine">By continuing you agree to our <a href="#terms">Terms &amp; Conditions</a>.</p>
   </div>
 </div>
+<div class="wrap legal" id="view-faq" hidden>
+  <h1>FAQs</h1>
+  <p class="updated">Answers to what people ask most.</p>
+  <h2>Getting started</h2>
+  <details class="qa"><summary>What is wishlist.co?</summary><p>A single place for products you want to buy from different online shops. You save a product with its link, and it joins one list with its photo, price and stock status.</p></details>
+  <details class="qa"><summary>How do I add a product?</summary><p>Open the product’s page in the shop, copy the address from your browser, paste it into the “Paste a product link” field on the Wishlist page, and press the blue plus button.</p></details>
+  <details class="qa"><summary>Which shops can I save from?</summary><p>You can paste a link from any online shop. How much detail we can show depends on the shop: some share photos, price and stock automatically, and some do not.</p></details>
+  <details class="qa"><summary>Is wishlist.co free?</summary><p>Yes. There is nothing to pay to save products or use coupons.</p></details>
+  <h2>Your list</h2>
+  <details class="qa"><summary>Why was my product added without a photo or price?</summary><p>Some shops block automatic lookups of their pages. When that happens the link is still saved, and “Open at” the shop takes you to the product, but we cannot show its photo, price or stock.</p></details>
+  <details class="qa"><summary>Where is my list saved? Can I see it on my phone too?</summary><p>Right now your list is saved in the browser you added it from, so it does not appear on your other devices and other people cannot see it. Signing in to keep one list everywhere is on the way.</p></details>
+  <details class="qa"><summary>I removed a product by mistake. Can I get it back?</summary><p>Yes, if you are quick: an “Undo” link appears next to the link field right after you remove something. After that, add the product again with its link.</p></details>
+  <details class="qa"><summary>How do the filters work?</summary><p>Each filter group lets you pick one option. Choosing a shop, a category, a price range and availability together narrows the list to products that match all of them. Pick the first option in a group to switch that filter off.</p></details>
+  <h2>Prices and stock</h2>
+  <details class="qa"><summary>How up to date are the price and stock?</summary><p>Each product shows a “Checked” date. That is the last time we read the price and stock from the shop. Prices change often, so confirm the final price on the shop’s site before you buy.</p></details>
+  <details class="qa"><summary>What does “Was $99.00 (40% off)” mean?</summary><p>It is the shop’s own earlier price and the discount the shop was advertising when we last checked. We show it as the shop states it and do not verify how long that earlier price was charged.</p></details>
+  <details class="qa"><summary>Will you tell me when a price drops or something is back in stock?</summary><p>Not yet. For now, open your wishlist to see current details. Alerts are planned.</p></details>
+  <details class="qa"><summary>Can I buy products on wishlist.co?</summary><p>No. We do not sell anything. “Open at” takes you to the shop, and you buy there under the shop’s own terms, delivery and returns.</p></details>
+  <h2>Coupons and ads</h2>
+  <details class="qa"><summary>Are the coupons real?</summary><p>Not yet. The coupons shown today are samples marked “Sample offer”, with codes that start with SAMPLE. They will not work at checkout. Real offers will replace them.</p></details>
+  <details class="qa"><summary>What do “Ad”, “Sponsored” and “Exclusive” mean?</summary><p>“Ad” and “Sponsored” mark paid placements from a brand. “Exclusive” marks an offer that comes with a code for wishlist.co users. Products you saved yourself are never ads.</p></details>
+  <details class="qa"><summary>Does wishlist.co earn money when I buy something?</summary><p>We may earn a commission from a shop when you follow a link and buy. It does not change the price you pay.</p></details>
+  <h2>Account and help</h2>
+  <details class="qa"><summary>How do I sign in?</summary><p>Sign-in with Google is being set up and does not work yet. You can use everything on the site without an account in the meantime.</p></details>
+  <details class="qa"><summary>How do I contact you?</summary><p>Use the Get in Touch page linked at the bottom of every page.</p></details>
+  <p class="more">Still not sure about something? <a class="textlink" href="#contact">Get in touch</a></p>
+</div>
+<div class="wrap legal" id="view-contact" hidden>
+  <h1>Get in Touch</h1>
+  <p class="updated">Questions, problems or ideas: tell us here.</p>
+  <form class="form" id="contact-form" novalidate>
+    <div class="field">
+      <label for="c-subject">Subject</label>
+      <input id="c-subject" name="subject" type="text" autocomplete="off" maxlength="120" aria-describedby="c-subject-err">
+      <p class="err" id="c-subject-err"></p>
+    </div>
+    <div class="field">
+      <label for="c-name">Full name</label>
+      <input id="c-name" name="name" type="text" autocomplete="name" maxlength="80" aria-describedby="c-name-err">
+      <p class="err" id="c-name-err"></p>
+    </div>
+    <div class="field">
+      <label for="c-message">Message</label>
+      <textarea id="c-message" name="message" rows="6" maxlength="2000" aria-describedby="c-message-err"></textarea>
+      <p class="err" id="c-message-err"></p>
+    </div>
+    <button type="submit" class="btn-primary">Send message</button>
+    <p class="form-msg" id="contact-msg" role="status"></p>
+  </form>
+</div>
 <footer class="foot-bar">
   <a href="#home" class="flogo" aria-label="wishlist.co, home">
     <svg width="11" height="10" viewBox="3.5 4.5 15 14" aria-hidden="true"><path d="M11 18.500S3.500 14 3.500 8.600A4 4 0 0 1 11 6.700a4 4 0 0 1 7.500 1.900C18.500 14 11 18.500 11 18.500z" fill="currentColor"/></svg>
@@ -513,10 +585,10 @@ body{display:flex;flex-direction:column;min-height:100vh}
   <nav aria-label="Footer">
     <ul>
       <li><a href="#home">Promotions</a></li>
-      <li><a href="#" data-soon>FAQs</a></li>
+      <li><a href="#faq">FAQs</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#" data-soon>Help</a></li>
-      <li><a href="#" data-soon>Get in Touch</a></li>
+      <li><a href="#contact">Get in Touch</a></li>
       <li><a href="#" data-soon>Partners</a></li>
       <li><a href="#" data-soon>Statement Privacy Policy</a></li>
       <li><a href="#" data-soon>Interest-Based Ads</a></li>
@@ -1133,7 +1205,7 @@ body{display:flex;flex-direction:column;min-height:100vh}
     }).then(function(){ saving = false; $("add-btn").disabled = false; });
   });
 
-  var VIEWS = ["home","wishlist","coupons","profile","about","terms","login"];
+  var VIEWS = ["home","wishlist","coupons","profile","about","terms","login","faq","contact"];
   function show(){
     var v = (location.hash || "").slice(1);
     if(VIEWS.indexOf(v) < 0) v = "home";
@@ -1237,6 +1309,19 @@ body{display:flex;flex-direction:column;min-height:100vh}
   $("f-view").addEventListener("click", function(){ panel(false); });
   document.addEventListener("keydown", function(ev){
     if(ev.key === "Escape" && document.body.classList.contains("filters-open")) panel(false);
+  });
+  $("contact-form").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var need = [["c-subject","Enter a subject."],["c-name","Enter your full name."],["c-message","Write your message."]], first = null;
+    need.forEach(function(f){
+      var input = $(f[0]), bad = !input.value.trim();
+      input.setAttribute("aria-invalid", String(bad));
+      $(f[0] + "-err").textContent = bad ? f[1] : "";
+      if(bad && !first) first = input;
+    });
+    var msg = $("contact-msg");
+    if(first){ msg.textContent = ""; first.focus(); return; }
+    msg.textContent = "This form isn\u2019t connected yet, so your message wasn\u2019t sent.";
   });
   $("g-btn").addEventListener("click", function(){
     $("login-msg").textContent = "Google sign-in isn\u2019t connected yet.";
