@@ -1,4 +1,4 @@
-// whishlist.co product lookup — Cloudflare Worker.
+// wishlist.co product lookup — Cloudflare Worker.
 //
 // GET /product?url=<https product page>
 //   -> { ok: true, product: { url, shop, name, category, color, price, currency,
